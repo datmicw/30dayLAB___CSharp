@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ValidEmail\**" />
+    <EmbeddedResource Remove="ValidEmail\**" />
+    <None Remove="ValidEmail\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\" />
   </ItemGroup>
 

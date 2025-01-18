@@ -1,5 +1,5 @@
-﻿using _30dayLAB___CSharp.saveNload;
-using System;
+﻿using System;
+using _30dayLAB___CSharp.saveNload;
 
 namespace _30dayLAB___CSharp
 {
@@ -11,18 +11,18 @@ namespace _30dayLAB___CSharp
             do
             {
                 Console.Clear();
-                Console.WriteLine("=== 30 Days of C# Practice: Main Menu ===");
-                Console.WriteLine("Select a day to work on (1-30):");
-                Console.WriteLine($"Day 1: Challenge | Management Contact | Linear Search");
+                DrawBox("30 Days of C# Practice", ConsoleColor.Green, ConsoleColor.Black);
+                Console.WriteLine("  Select a day to work on (1-30):");
+                Console.WriteLine("  1. Challenge | Management Contact | Linear Search");
+                Console.WriteLine("  31. Exit");
+                Console.Write("  Choose an option: ");
 
-                Console.WriteLine("31. Exit");
-                Console.Write("Choose an option: ");
                 if (!int.TryParse(Console.ReadLine(), out int option))
                 {
-                    Console.WriteLine("Invalid option. Press any key to continue...");
-                    Console.ReadKey();
+                    ShowMessage("Invalid option. Please enter a valid number!", ConsoleColor.Red);
                     continue;
                 }
+
                 if (option == 31)
                 {
                     exit = true;
@@ -30,7 +30,7 @@ namespace _30dayLAB___CSharp
                 else
                 {
                     ExecuteDay(option);
-                    Console.WriteLine("\nPress any key to return to the main menu...");
+                    ShowMessage("\nPress any key to return to the main menu...", ConsoleColor.Yellow);
                     Console.ReadKey();
                 }
             } while (!exit);
@@ -39,14 +39,14 @@ namespace _30dayLAB___CSharp
         private static void ExecuteDay(int day)
         {
             Console.Clear();
-            Console.WriteLine($"=== Day {day} Challenge ===");
+            DrawBox($"Day {day} Challenge", ConsoleColor.Blue, ConsoleColor.Black);
             switch (day)
             {
                 case 1:
                     Day1();
                     break;
                 default:
-                    Console.WriteLine("Invalid day. Please select a valid day between 1 and 30.");
+                    ShowMessage("Invalid day. Please select a valid day between 1 and 30.", ConsoleColor.Yellow);
                     break;
             }
         }
@@ -54,54 +54,78 @@ namespace _30dayLAB___CSharp
         private static void Day1()
         {
             Manage_Contacts.ManageContact manageContact = new Manage_Contacts.ManageContact();
-            Console.Clear();
-            Console.WriteLine($"Menu Day 1:");
-            Console.WriteLine("1. Add Contacts");
-            Console.WriteLine("2. Show Contacts");
-            Console.WriteLine("3. Update Contacts");
-            Console.WriteLine("4. Delete Contacts");
-            Console.WriteLine("5. Search Contacts");
-            Console.WriteLine("6. Exit");
-            Console.Write("Choose an option: ");
-
-            int n;
-            if (!int.TryParse(Console.ReadLine(), out n))
+            while (true)
             {
-                Console.WriteLine("Invalid option. Press any key to continue...");
+                Console.Clear();
+                DrawBox("Day 1 Menu", ConsoleColor.Cyan, ConsoleColor.Black);
+                Console.WriteLine("  1. Add Contacts");
+                Console.WriteLine("  2. Show Contacts");
+                Console.WriteLine("  3. Update Contacts");
+                Console.WriteLine("  4. Delete Contacts");
+                Console.WriteLine("  5. Search Contacts");
+                Console.WriteLine("  6. Back to Main Menu");
+                Console.Write("  Choose an option: ");
+
+                if (!int.TryParse(Console.ReadLine(), out int n))
+                {
+                    ShowMessage("Invalid option. Please enter a valid number!", ConsoleColor.Red);
+                    continue;
+                }
+
+                Console.Clear();
+                DrawBox("Day 1 Action", ConsoleColor.Magenta, ConsoleColor.Black);
+                switch (n)
+                {
+                    case 1:
+                        Console.WriteLine("  === Add Contact ===");
+                        manageContact.AddContact();
+                        break;
+                    case 2:
+                        Console.WriteLine("  === Show Contacts ===");
+                        manageContact.ShowContacts();
+                        break;
+                    case 3:
+                        Console.WriteLine("  === Update Contact ===");
+                        manageContact.UpdateContact();
+                        break;
+                    case 4:
+                        Console.WriteLine("  === Delete Contact ===");
+                        manageContact.DeleteContact();
+                        break;
+                    case 5:
+                        Console.WriteLine("  === Search Contact ===");
+                        manageContact.SearchContact();
+                        break;
+                    case 6:
+                        ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
+                        return;
+                    default:
+                        ShowMessage("Invalid choice. Please try again.", ConsoleColor.Yellow);
+                        break;
+                }
+                ShowMessage("\nPress any key to continue...", ConsoleColor.Yellow);
                 Console.ReadKey();
-                return;
             }
+        }
 
-            switch (n)
-            {
-                case 1:
-                    Console.WriteLine("1. Add Contacts");
-                    manageContact.AddContact();
-                    break;
-                case 2:
-                    Console.WriteLine("2. Show Contacts");
-                    manageContact.ShowContact();
-                    break;
-                case 3:
-                    Console.WriteLine("3. Update Contacts");
-                    manageContact.UpdateContact();
-                    break;
-                case 4:
-                    Console.WriteLine("4. Delete Contacts");
-                    manageContact.DeleteContact();
-                    break;
-                case 5:
-                    Console.WriteLine("5. Search Contacts");
-                    manageContact.SearchContact();
-                    break;
-                case 6:
-                    Console.WriteLine("Exiting Day 1.");
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice. Try again.");
-                    break;
-            }
+        private static void ShowMessage(string message, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine($"\n  {message}");
+            Console.ResetColor();
+        }
+
+        private static void DrawBox(string title, ConsoleColor fgColor, ConsoleColor bgColor)
+        {
+            Console.ForegroundColor = fgColor;
+            Console.BackgroundColor = bgColor;
+
+            string line = new string('=', title.Length + 8);
+            Console.WriteLine(line);
+            Console.WriteLine($"=== {title} ===");
+            Console.WriteLine(line);
+
+            Console.ResetColor();
         }
     }
 }
-
