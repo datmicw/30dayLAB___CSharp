@@ -1,4 +1,5 @@
 ﻿using System;
+using _30dayLAB___CSharp.Manage_Contacts;
 using _30dayLAB___CSharp.saveNload;
 
 namespace _30dayLAB___CSharp
@@ -14,6 +15,7 @@ namespace _30dayLAB___CSharp
                 DrawBox("30 Days of C# Practice", ConsoleColor.Green, ConsoleColor.Black);
                 Console.WriteLine("  Select a day to work on (1-30):");
                 Console.WriteLine("  1. Challenge | Management Contact | Linear Search");
+                Console.WriteLine("  2. Challenge | Sort Products      | Bubble Sort  ");
                 Console.WriteLine("  31. Exit");
                 Console.Write("  Choose an option: ");
 
@@ -45,9 +47,60 @@ namespace _30dayLAB___CSharp
                 case 1:
                     Day1();
                     break;
+                case 2:
+                    Day2();
+                    break;
                 default:
                     ShowMessage("Invalid day. Please select a valid day between 1 and 30.", ConsoleColor.Yellow);
                     break;
+            }
+        }
+
+        private static void Day2()
+        {
+            Day2_Sort_Products.SortProducts sortProducts = new Day2_Sort_Products.SortProducts();
+            while (true)
+            {
+                Console.Clear();
+                DrawBox("Day 2 Menu", ConsoleColor.Cyan, ConsoleColor.Black);
+                Console.WriteLine("  1. Add Products");
+                Console.WriteLine("  2. Show Prodcuts");
+                Console.WriteLine("  3. Short Products");
+                Console.WriteLine("  4. Back to Main Menu");
+                Console.Write("  Choose an option: ");
+
+                if (!int.TryParse(Console.ReadLine(), out int n))
+                {
+                    ShowMessage("Invalid option. Please enter a valid number!", ConsoleColor.Red);
+                    continue;
+                }
+
+                Console.Clear();
+                DrawBox("Day 2 Action", ConsoleColor.Magenta, ConsoleColor.Black);
+                switch (n)
+                {
+                    case 1:
+                        Console.WriteLine("  === Add Product ===");
+                        sortProducts.AddProduct();
+                        break;
+                    case 2:
+                        Console.WriteLine("  === Show Product ===");
+                        sortProducts.ShowProducts();
+                        break;
+                    case 3:
+                        Console.WriteLine("  === Sort Product ===");
+                        sortProducts.BubbleSortAscending();
+                        sortProducts.ShowProducts();
+                        break;
+                    case 4:
+                        ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
+                        return;
+                    default:
+                        ShowMessage("Invalid choice. Please try again.", ConsoleColor.Yellow);
+                        break;
+                }
+                ShowMessage("\nPress any key to continue...", ConsoleColor.Yellow);
+                Console.ReadKey();
             }
         }
 

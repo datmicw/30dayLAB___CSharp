@@ -4,8 +4,6 @@
 //• Implement functionalities to add, update, delete, and search contacts by name.
 //• Algorithm: Use a linear search to find a contact by name.
 
-using System.ComponentModel.DataAnnotations;
-
 namespace _30dayLAB___CSharp.Manage_Contacts
 {
     public class Contact
@@ -15,6 +13,6 @@ namespace _30dayLAB___CSharp.Manage_Contacts
         public string? Phone { get; set; }
         public string? Email { get; set; }
         public string? Address { get; set; }
-        
+
     }
 }

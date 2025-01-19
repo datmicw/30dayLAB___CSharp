@@ -85,13 +85,13 @@ namespace _30dayLAB___CSharp.Manage_Contacts
 
                 Console.Write("Enter Name: ");
                 string name = Console.ReadLine();
-                
+
                 Console.Write("Enter Phone: ");
                 string phone = Console.ReadLine();
-               
+
                 Console.Write("Enter Email: ");
                 string email = Console.ReadLine();
-                
+
                 Console.Write("Enter Address: ");
                 string address = Console.ReadLine();
 
