@@ -16,6 +16,7 @@ namespace _30dayLAB___CSharp
                 Console.WriteLine("  Select a day to work on (1-30):");
                 Console.WriteLine("  1. Challenge | Management Contact | Linear Search");
                 Console.WriteLine("  2. Challenge | Sort Products      | Bubble Sort  ");
+                Console.WriteLine("  3. Challenge | Banking System     | If/Else      ");
                 Console.WriteLine("  31. Exit");
                 Console.Write("  Choose an option: ");
 
@@ -50,6 +51,9 @@ namespace _30dayLAB___CSharp
                 case 2:
                     Day2();
                     break;
+                case 3:
+                    Day3();
+                    break;
                 default:
                     ShowMessage("Invalid day. Please select a valid day between 1 and 30.", ConsoleColor.Yellow);
                     break;
@@ -64,7 +68,7 @@ namespace _30dayLAB___CSharp
                 Console.Clear();
                 DrawBox("Day 2 Menu", ConsoleColor.Cyan, ConsoleColor.Black);
                 Console.WriteLine("  1. Add Products");
-                Console.WriteLine("  2. Show Prodcuts");
+                Console.WriteLine("  2. Show Products");
                 Console.WriteLine("  3. Short Products");
                 Console.WriteLine("  4. Back to Main Menu");
                 Console.Write("  Choose an option: ");
@@ -148,6 +152,60 @@ namespace _30dayLAB___CSharp
                     case 5:
                         Console.WriteLine("  === Search Contact ===");
                         manageContact.SearchContact();
+                        break;
+                    case 6:
+                        ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
+                        return;
+                    default:
+                        ShowMessage("Invalid choice. Please try again.", ConsoleColor.Yellow);
+                        break;
+                }
+                ShowMessage("\nPress any key to continue...", ConsoleColor.Yellow);
+                Console.ReadKey();
+            }
+        }
+        private static void Day3()
+        {
+            Day_3_Banking_System.BankingSystem bankingSystem = new Day_3_Banking_System.BankingSystem();
+            while (true)
+            {
+                Console.Clear();
+                DrawBox("Day 3 Menu", ConsoleColor.Cyan, ConsoleColor.Black);
+                Console.WriteLine("  1. Add Account");
+                Console.WriteLine("  2. Show Account");
+                Console.WriteLine("  3. Withdraw");
+                Console.WriteLine("  4. Deposit");
+                Console.WriteLine("  5. Transfer");
+                Console.WriteLine("  6. Back to Main Menu");
+                Console.Write("  Choose an option: ");
+                if (!int.TryParse(Console.ReadLine(), out int n))
+                {
+                    ShowMessage("Invalid option. Please enter a valid number!", ConsoleColor.Red);
+                    continue;
+                }
+                Console.Clear();
+                DrawBox("Day 3 Action", ConsoleColor.Magenta, ConsoleColor.Black);
+                switch (n)
+                {
+                    case 1:
+                        Console.WriteLine("  === Add Account ===");
+                        bankingSystem.AddAccount();
+                        break;
+                    case 2:
+                        Console.WriteLine("  === Show Account ===");
+                        bankingSystem.ShowAccount();
+                        break;
+                    case 3:
+                        Console.WriteLine("  === Withdraw ===");
+                        // Withdraw();
+                        break;
+                    case 4:
+                        Console.WriteLine("  === Deposit ===");
+                        bankingSystem.Deposit();
+                        break;
+                    case 5:
+                        Console.WriteLine("  === Transfer ===");
+                        // Transfer();
                         break;
                     case 6:
                         ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
