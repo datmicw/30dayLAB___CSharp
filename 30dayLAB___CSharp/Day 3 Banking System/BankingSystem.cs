@@ -238,5 +238,103 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
             }
             FileManage.SaveToFile(baseURL, string.Join('\n', updatedLines));
         }
+        public void Transfer()
+        {
+            string fileData = FileManage.LoadFromFile(baseURL);
+            if (string.IsNullOrEmpty(fileData))
+            {
+                Console.WriteLine("No accounts found in file.");
+                return;
+            }
+
+            Console.WriteLine("Enter Sender Account Number: ");
+            int senderAccountNumber = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Enter Receiver Account Number: ");
+            int receiverAccountNumber = Convert.ToInt32(Console.ReadLine());
+
+            string[] lines = fileData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            bool senderFound = false, receiverFound = false;
+            decimal senderBalance = 0, receiverBalance = 0;
+            List<string> updatedLines = new List<string>();
+
+            foreach (var line in lines)
+            {
+                string[] accountData = line.Split(',');
+
+                if (accountData.Length >= 3)
+                {
+                    int fileAccountNumber = int.Parse(accountData[0].Split(':')[1].Trim());
+                    decimal balanceData = decimal.Parse(accountData[2].Split(':')[1].Trim());
+
+                    if (fileAccountNumber == senderAccountNumber)
+                    {
+                        senderFound = true;
+                        senderBalance = balanceData;
+                    }
+                    else if (fileAccountNumber == receiverAccountNumber)
+                    {
+                        receiverFound = true;
+                        receiverBalance = balanceData;
+                    }
+                }
+            }
+
+            if (!senderFound)
+            {
+                Console.WriteLine("Sender account not found.");
+                return;
+            }
+
+            if (!receiverFound)
+            {
+                Console.WriteLine("Receiver account not found.");
+                return;
+            }
+
+            Console.WriteLine("Enter Amount You Want to Transfer: ");
+            decimal transferAmount = Convert.ToDecimal(Console.ReadLine());
+
+            if (transferAmount <= 0)
+            {
+                Console.WriteLine("Invalid transfer amount. Enter a positive value.");
+                return;
+            }
+
+            if (transferAmount > senderBalance)
+            {
+                Console.WriteLine("Insufficient balance in sender account.");
+                return;
+            }
+
+            // Update balances
+            senderBalance -= transferAmount;
+            receiverBalance += transferAmount;
+
+            foreach (var line in lines)
+            {
+                string[] accountData = line.Split(',');
+                int fileAccountNumber = int.Parse(accountData[0].Split(':')[1].Trim());
+                decimal balanceData = decimal.Parse(accountData[2].Split(':')[1].Trim());
+
+                if (fileAccountNumber == senderAccountNumber)
+                {
+                    updatedLines.Add($"AccountNumber: {fileAccountNumber}, AccountName: {accountData[1].Split(':')[1].Trim()}, Balance: {senderBalance}");
+                }
+                else if (fileAccountNumber == receiverAccountNumber)
+                {
+                    updatedLines.Add($"AccountNumber: {fileAccountNumber}, AccountName: {accountData[1].Split(':')[1].Trim()}, Balance: {receiverBalance}");
+                }
+                else
+                {
+                    updatedLines.Add(line);
+                }
+            }
+
+            FileManage.SaveToFile(baseURL, string.Join('\n', updatedLines));
+            Console.WriteLine("Transfer Successful!");
+        }
+
     }
 }
+

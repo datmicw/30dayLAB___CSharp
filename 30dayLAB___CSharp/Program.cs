@@ -1,8 +1,4 @@
-﻿using System;
-using _30dayLAB___CSharp.Manage_Contacts;
-using _30dayLAB___CSharp.saveNload;
-
-namespace _30dayLAB___CSharp
+﻿namespace _30dayLAB___CSharp
 {
     class Program
     {
@@ -205,7 +201,7 @@ namespace _30dayLAB___CSharp
                         break;
                     case 5:
                         Console.WriteLine("  === Transfer ===");
-                        // Transfer();
+                        bankingSystem.Transfer();
                         break;
                     case 6:
                         ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
