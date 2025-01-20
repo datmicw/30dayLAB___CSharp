@@ -14,8 +14,9 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
         }
         public static class Messages
         {
-            public const string InsufficientBalance = "Insufficient balance. Try a smaller amount.";
             public const string AccountNotFound = "Account not found.";
+            public const string InvalidAmount = "Invalid amount.";
+            public const string AccountNumber = "Enter Account Number: ";
 
         }
         private void SaveToFile() => FileManage.SaveToFile(baseURL, BanksToString());
@@ -63,12 +64,11 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
             }
             return sb.ToString();
         }
-        private Bank FindAccountByNumber(int accountNumber) =>
-           Banks.FirstOrDefault(b => b.AccountNumber == accountNumber);
+        private Bank FindAccountByNumber(int accountNumber) =>  Banks.FirstOrDefault(b => b.AccountNumber == accountNumber);
 
         public void AddAccount()
         {
-            Console.WriteLine("Enter Account Number: ");
+            Console.WriteLine(Messages.AccountNumber);
             int accountNumber = Convert.ToInt32(Console.ReadLine());
             do
             {
@@ -94,14 +94,14 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
         }
         public void ViewAccount()
         {
-            Console.WriteLine("Enter Account Number: ");
+            Console.WriteLine(Messages.AccountNumber);
             int accountNumber = Convert.ToInt32(Console.ReadLine());
 
             var account = FindAccountByNumber(accountNumber);
 
             if (account == null)
             {
-                Console.WriteLine("Account not found.");
+                Console.WriteLine(Messages.AccountNotFound);
                 return;
             }
             Console.WriteLine($"Account Number: {account.AccountNumber}\nAccount Name: {account.AccountName}\nBalance: {account.Balance}");
@@ -109,20 +109,20 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
         }
         public void Deposit()
         {
-            Console.WriteLine("Enter Account Number: ");
+            Console.WriteLine(Messages.AccountNumber);
             int accountNumber = Convert.ToInt32(Console.ReadLine());
             var account = FindAccountByNumber(accountNumber);
 
             if (account == null)
             {
-                Console.WriteLine("Account not found.");
+                Console.WriteLine(Messages.AccountNotFound);
                 return;
             }
             Console.Write("Enter Deposit Amount: ");
             decimal depositAmount = decimal.Parse(Console.ReadLine());
             if(depositAmount <= 0)
             {
-                Console.WriteLine("Invalid deposit amount.");
+                Console.WriteLine(Messages.InvalidAmount);
                 return;
             }
 
@@ -132,13 +132,13 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
         }
         public void Withdraw()
         {
-            Console.WriteLine("Enter Account Number: ");
+            Console.WriteLine(Messages.AccountNumber);
             int accountNumber = Convert.ToInt32(Console.ReadLine());
             var account = FindAccountByNumber(accountNumber);
 
             if (account == null)
             {
-                Console.WriteLine("Account not found.");
+                Console.WriteLine(Messages.AccountNotFound);
                 return;
             }
 
@@ -146,7 +146,7 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
             decimal withdrawAmount = decimal.Parse(Console.ReadLine());
             if (withdrawAmount <= 0 || withdrawAmount > account.Balance)
             {
-                Console.WriteLine("Invalid withdraw amount.");
+                Console.WriteLine(Messages.InvalidAmount);
                 return;
             }
 
@@ -162,7 +162,7 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
 
             if (senderAccount == null)
             {
-                Console.WriteLine("Sender account not found.");
+                Console.WriteLine(Messages.AccountNotFound);
                 return;
             }
 
@@ -172,7 +172,7 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
 
             if (receiverAccount == null)
             {
-                Console.WriteLine("Receiver account not found.");
+                Console.WriteLine(Messages.AccountNotFound);
                 return;
             }
 
@@ -181,7 +181,7 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
 
             if (transferAmount <= 0 || transferAmount > senderAccount.Balance)
             {
-                Console.WriteLine("Invalid transfer amount.");
+                Console.WriteLine(Messages.InvalidAmount);
                 return;
             }
 
