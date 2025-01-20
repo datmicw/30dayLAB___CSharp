@@ -12,17 +12,21 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
             Banks = new List<Bank>();
             LoadFromFile();
         }
-        public void SaveToFile()
+        public static class Messages
         {
-            FileManage.SaveToFile(baseURL, BanksToString());
+            public const string InsufficientBalance = "Insufficient balance. Try a smaller amount.";
+            public const string AccountNotFound = "Account not found.";
+
         }
-        public void LoadFromFile()
+        private void SaveToFile() => FileManage.SaveToFile(baseURL, BanksToString());
+
+        private void LoadFromFile()
         {
             Banks = new List<Bank>();
             string fileData = FileManage.LoadFromFile(baseURL);
             if (string.IsNullOrEmpty(fileData))
             {
-                Console.WriteLine("No accounts found in file. Initializing an empty account list.");
+                Console.WriteLine(Messages.AccountNotFound);
                 return;
             }
             string[] lines = fileData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
@@ -59,6 +63,9 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
             }
             return sb.ToString();
         }
+        private Bank FindAccountByNumber(int accountNumber) =>
+           Banks.FirstOrDefault(b => b.AccountNumber == accountNumber);
+
         public void AddAccount()
         {
             Console.WriteLine("Enter Account Number: ");
@@ -85,254 +92,104 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
             Console.WriteLine("Account Created Successfully!");
             SaveToFile();
         }
-        public void ShowAccount()
+        public void ViewAccount()
         {
             Console.WriteLine("Enter Account Number: ");
             int accountNumber = Convert.ToInt32(Console.ReadLine());
 
-            string fileData = FileManage.LoadFromFile(baseURL);
-            if (string.IsNullOrEmpty(fileData))
-            {
-                Console.WriteLine("No accounts found in file.");
-                return;
-            }
-            string[] lines = fileData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-            bool accountFound = false;
+            var account = FindAccountByNumber(accountNumber);
 
-            foreach (var line in lines)
-            {
-                string[] accountData = line.Split(',');
-                if (accountData.Length >= 3)
-                {
-                    int fileAccountNumber = int.Parse(accountData[0].Split(':')[1].Trim());
-                    if (fileAccountNumber == accountNumber)
-                    {
-                        Console.WriteLine($"Account Number: {accountData[0].Split(':')[1].Trim()}");
-                        Console.WriteLine($"Account Name: {accountData[1].Split(':')[1].Trim()}");
-                        Console.WriteLine($"Balance: {accountData[2].Split(':')[1].Trim()}");
-                        accountFound = true;
-                        break;
-                    }
-                }
-            }
-            if (!accountFound)
+            if (account == null)
             {
                 Console.WriteLine("Account not found.");
+                return;
             }
+            Console.WriteLine($"Account Number: {account.AccountNumber}\nAccount Name: {account.AccountName}\nBalance: {account.Balance}");
+
         }
         public void Deposit()
         {
             Console.WriteLine("Enter Account Number: ");
             int accountNumber = Convert.ToInt32(Console.ReadLine());
-            string fileData = FileManage.LoadFromFile(baseURL);
-            if (string.IsNullOrEmpty(fileData))
-            {
-                Console.WriteLine("No accounts found in file.");
-                return;
-            }
+            var account = FindAccountByNumber(accountNumber);
 
-            string[] lines = fileData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-            bool accountFound = false;
-            List<string> updatedLines = new List<string>(); // luu lai cac dong da update
-
-            foreach (var line in lines)
-            {
-                string[] accountData = line.Split(','); // tach tung dong thanh cac phan tu
-
-                if (accountData.Length >= 3)
-                {
-                    int fileAccountNumber = int.Parse(accountData[0].Split(':')[1].Trim());
-
-                    if (fileAccountNumber == accountNumber)
-                    {
-                        accountFound = true;
-
-                        Console.WriteLine("Enter Your Deposit Amount: ");
-                        decimal depositAmount = Convert.ToDecimal(Console.ReadLine());
-                        if (depositAmount <= 0)
-                        {
-                            Console.WriteLine("Invalid Deposit Amount.");
-                            return;
-                        }
-                        decimal balance = decimal.Parse(accountData[2].Split(':')[1].Trim());
-                        balance += depositAmount;
-                        updatedLines.Add($"AccountNumber: {fileAccountNumber}, AccountName: {accountData[1].Split(':')[1].Trim()}, Balance: {balance}"); // cap nhat lai so du
-                        Console.WriteLine("Deposit Successful!");
-                    }
-                    else
-                    {
-                        updatedLines.Add(line); // giu nguyen cac dong khac
-                    }
-                }
-                else
-                {
-                    updatedLines.Add(line); // giu nguyen cac dong khac
-                }
-            }
-            if (!accountFound)
+            if (account == null)
             {
                 Console.WriteLine("Account not found.");
                 return;
             }
-            FileManage.SaveToFile(baseURL, string.Join('\n', updatedLines));
+            Console.Write("Enter Deposit Amount: ");
+            decimal depositAmount = decimal.Parse(Console.ReadLine());
+            if(depositAmount <= 0)
+            {
+                Console.WriteLine("Invalid deposit amount.");
+                return;
+            }
+
+            account.Balance += depositAmount;
+            Console.WriteLine("Deposit successful!");
+            SaveToFile();
         }
         public void Withdraw()
         {
             Console.WriteLine("Enter Account Number: ");
             int accountNumber = Convert.ToInt32(Console.ReadLine());
-            string fileData = FileManage.LoadFromFile(baseURL);
-            if (string.IsNullOrEmpty(fileData))
-            {
-                Console.WriteLine("No accounts found in file.");
-                return;
-            }
+            var account = FindAccountByNumber(accountNumber);
 
-            string[] lines = fileData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-            bool accountFound = false;
-            List<string> updatedLines = new List<string>(); // luu lai cac dong da update
-
-            foreach (var line in lines)
-            {
-                string[] accountData = line.Split(','); // tach tung dong thanh cac phan tu
-
-                if (accountData.Length >= 3)
-                {
-                    int fileAccountNumber = int.Parse(accountData[0].Split(':')[1].Trim());
-
-                    if (fileAccountNumber == accountNumber)
-                    {
-                        decimal balanceData = decimal.Parse(accountData[2].Split(':')[1].Trim()); // lay so du hien tai
-                        accountFound = true;
-                        decimal withDrawAmount; // so tien rut
-                        do // lap lai neu so tien rut > so du hoac so tien rut <= 0
-                        {
-                            Console.WriteLine("Enter Amount You Want Withdraw: ");
-                            withDrawAmount = Convert.ToDecimal(Console.ReadLine()); // nhap so tien rut
-                            if (withDrawAmount > balanceData)
-                            {
-                                Console.WriteLine("Insufficient balance. Try a smaller amount.");
-                            }
-                            else if (withDrawAmount <= 0)
-                            {
-                                Console.WriteLine("Invalid amount. Enter a positive number.");
-                            }
-                        } while (withDrawAmount > balanceData || withDrawAmount <= 0); // lap lai neu so tien rut > so du hoac so tien rut <= 0
-                        balanceData -= withDrawAmount;
-                        updatedLines.Add($"AccountNumber: {fileAccountNumber}, AccountName: {accountData[1].Split(':')[1].Trim()}, Balance: {balanceData}");
-                        Console.WriteLine("Withdraw Successful!");
-                    }
-                    else
-                    {
-                        updatedLines.Add(line); // giu nguyen cac dong khac
-                    }
-                }
-                else
-                {
-                    updatedLines.Add(line); // giu nguyen cac dong khac
-                }
-            }
-            if (!accountFound)
+            if (account == null)
             {
                 Console.WriteLine("Account not found.");
                 return;
             }
-            FileManage.SaveToFile(baseURL, string.Join('\n', updatedLines));
-        }
-        public void Transfer()
-        {
-            string fileData = FileManage.LoadFromFile(baseURL);
-            if (string.IsNullOrEmpty(fileData))
+
+            Console.Write("Enter Withdraw Amount: ");
+            decimal withdrawAmount = decimal.Parse(Console.ReadLine());
+            if (withdrawAmount <= 0 || withdrawAmount > account.Balance)
             {
-                Console.WriteLine("No accounts found in file.");
+                Console.WriteLine("Invalid withdraw amount.");
                 return;
             }
 
-            Console.WriteLine("Enter Sender Account Number: ");
-            int senderAccountNumber = Convert.ToInt32(Console.ReadLine());
+            account.Balance -= withdrawAmount;
+            Console.WriteLine("Withdraw successful!");
+            SaveToFile();
+        }
+        public void Transfer()
+        {
+            Console.Write("Enter Sender Account Number: ");
+            int senderAccountNumber = int.Parse(Console.ReadLine());
+            var senderAccount = FindAccountByNumber(senderAccountNumber);
 
-            Console.WriteLine("Enter Receiver Account Number: ");
-            int receiverAccountNumber = Convert.ToInt32(Console.ReadLine());
-
-            string[] lines = fileData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-            bool senderFound = false, receiverFound = false;
-            decimal senderBalance = 0, receiverBalance = 0;
-            List<string> updatedLines = new List<string>();
-
-            foreach (var line in lines)
-            {
-                string[] accountData = line.Split(',');
-
-                if (accountData.Length >= 3)
-                {
-                    int fileAccountNumber = int.Parse(accountData[0].Split(':')[1].Trim());
-                    decimal balanceData = decimal.Parse(accountData[2].Split(':')[1].Trim());
-
-                    if (fileAccountNumber == senderAccountNumber)
-                    {
-                        senderFound = true;
-                        senderBalance = balanceData;
-                    }
-                    else if (fileAccountNumber == receiverAccountNumber)
-                    {
-                        receiverFound = true;
-                        receiverBalance = balanceData;
-                    }
-                }
-            }
-
-            if (!senderFound)
+            if (senderAccount == null)
             {
                 Console.WriteLine("Sender account not found.");
                 return;
             }
 
-            if (!receiverFound)
+            Console.Write("Enter Receiver Account Number: ");
+            int receiverAccountNumber = int.Parse(Console.ReadLine());
+            var receiverAccount = FindAccountByNumber(receiverAccountNumber);
+
+            if (receiverAccount == null)
             {
                 Console.WriteLine("Receiver account not found.");
                 return;
             }
 
-            Console.WriteLine("Enter Amount You Want to Transfer: ");
-            decimal transferAmount = Convert.ToDecimal(Console.ReadLine());
+            Console.Write("Enter Transfer Amount: ");
+            decimal transferAmount = decimal.Parse(Console.ReadLine());
 
-            if (transferAmount <= 0)
+            if (transferAmount <= 0 || transferAmount > senderAccount.Balance)
             {
-                Console.WriteLine("Invalid transfer amount. Enter a positive value.");
+                Console.WriteLine("Invalid transfer amount.");
                 return;
             }
 
-            if (transferAmount > senderBalance)
-            {
-                Console.WriteLine("Insufficient balance in sender account.");
-                return;
-            }
+            senderAccount.Balance -= transferAmount;
+            receiverAccount.Balance += transferAmount;
 
-            // Update balances
-            senderBalance -= transferAmount;
-            receiverBalance += transferAmount;
-
-            foreach (var line in lines)
-            {
-                string[] accountData = line.Split(',');
-                int fileAccountNumber = int.Parse(accountData[0].Split(':')[1].Trim());
-                decimal balanceData = decimal.Parse(accountData[2].Split(':')[1].Trim());
-
-                if (fileAccountNumber == senderAccountNumber)
-                {
-                    updatedLines.Add($"AccountNumber: {fileAccountNumber}, AccountName: {accountData[1].Split(':')[1].Trim()}, Balance: {senderBalance}");
-                }
-                else if (fileAccountNumber == receiverAccountNumber)
-                {
-                    updatedLines.Add($"AccountNumber: {fileAccountNumber}, AccountName: {accountData[1].Split(':')[1].Trim()}, Balance: {receiverBalance}");
-                }
-                else
-                {
-                    updatedLines.Add(line);
-                }
-            }
-
-            FileManage.SaveToFile(baseURL, string.Join('\n', updatedLines));
-            Console.WriteLine("Transfer Successful!");
+            Console.WriteLine("Transfer successful!");
+            SaveToFile();
         }
 
     }

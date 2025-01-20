@@ -189,7 +189,7 @@
                         break;
                     case 2:
                         Console.WriteLine("  === Show Account ===");
-                        bankingSystem.ShowAccount();
+                        bankingSystem.ViewAccount();
                         break;
                     case 3:
                         Console.WriteLine("  === Withdraw ===");
