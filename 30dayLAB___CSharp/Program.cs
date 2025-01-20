@@ -197,7 +197,7 @@ namespace _30dayLAB___CSharp
                         break;
                     case 3:
                         Console.WriteLine("  === Withdraw ===");
-                        // Withdraw();
+                        bankingSystem.Withdraw();
                         break;
                     case 4:
                         Console.WriteLine("  === Deposit ===");

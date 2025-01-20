@@ -167,5 +167,67 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
             }
             FileManage.SaveToFile(baseURL, string.Join('\n', updatedLines));
         }
+        public void Withdraw()
+        {
+            Console.WriteLine("Enter Account Number: ");
+            int accountNumber = Convert.ToInt32(Console.ReadLine());
+            string fileData = FileManage.LoadFromFile(baseURL);
+            if (string.IsNullOrEmpty(fileData))
+            {
+                Console.WriteLine("No accounts found in file.");
+                return;
+            }
+
+            string[] lines = fileData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            bool accountFound = false;
+            List<string> updatedLines = new List<string>(); // luu lai cac dong da update
+
+            foreach (var line in lines)
+            {
+                string[] accountData = line.Split(','); // tach tung dong thanh cac phan tu
+
+                if (accountData.Length >= 3)
+                {
+                    int fileAccountNumber = int.Parse(accountData[0].Split(':')[1].Trim());
+
+                    if (fileAccountNumber == accountNumber)
+                    {
+                        decimal balanceData = decimal.Parse(accountData[2].Split(':')[1].Trim()); // lay so du hien tai
+                        accountFound = true;
+                        decimal withDrawAmount; // so tien rut
+                        do // lap lai neu so tien rut > so du hoac so tien rut <= 0
+                        {
+                            Console.WriteLine("Enter Amount You Want Withdraw: ");
+                            withDrawAmount = Convert.ToDecimal(Console.ReadLine()); // nhap so tien rut
+                            if (withDrawAmount > balanceData)
+                            {
+                                Console.WriteLine("Insufficient balance. Try a smaller amount.");
+                            }
+                            else if (withDrawAmount <= 0)
+                            {
+                                Console.WriteLine("Invalid amount. Enter a positive number.");
+                            }
+                        } while (withDrawAmount > balanceData || withDrawAmount <= 0); // lap lai neu so tien rut > so du hoac so tien rut <= 0
+                        balanceData -= withDrawAmount;
+                        updatedLines.Add($"AccountNumber: {fileAccountNumber}, AccountName: {accountData[1].Split(':')[1].Trim()}, Balance: {balanceData}");
+                        Console.WriteLine("Withdraw Successful!");
+                    }
+                    else
+                    {
+                        updatedLines.Add(line); // giu nguyen cac dong khac
+                    }
+                }
+                else
+                {
+                    updatedLines.Add(line); // giu nguyen cac dong khac
+                }
+            }
+            if (!accountFound)
+            {
+                Console.WriteLine("Account not found.");
+                return;
+            }
+            FileManage.SaveToFile(baseURL, string.Join('\n', updatedLines));
+        }
     }
 }
