@@ -63,6 +63,15 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
         {
             Console.WriteLine("Enter Account Number: ");
             int accountNumber = Convert.ToInt32(Console.ReadLine());
+            do
+            {
+                if (Banks.Any(c => c.AccountNumber == accountNumber))
+                {
+                    Console.WriteLine("ID already exists. Please enter a different ID.");
+                    Console.Write("Enter ID: ");
+                    accountNumber = int.Parse(Console.ReadLine());
+                }
+            } while (Banks.Any(c => c.AccountNumber == accountNumber));
             Console.WriteLine("Enter Account Name: ");
             string accountName = Console.ReadLine();
 
