@@ -5,7 +5,7 @@
 //• Ensure withdrawals don’t exceed the balance.
 //• Algorithm: Use branching logic (if/else) for transaction processing
 
-namespace _30dayLAB___CSharp.Day_3_Banking_System
+namespace _30dayLAB___CSharp.Day3_Banking_System
 {
     internal class Bank
     {

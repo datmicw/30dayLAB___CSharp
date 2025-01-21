@@ -1,7 +1,7 @@
 ﻿using _30dayLAB___CSharp.saveNload;
 using System.Text;
 
-namespace _30dayLAB___CSharp.Day_3_Banking_System
+namespace _30dayLAB___CSharp.Day3_Banking_System
 {
     internal class BankingSystem
     {
