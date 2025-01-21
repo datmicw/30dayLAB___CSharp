@@ -35,17 +35,5 @@ namespace _30dayLAB___CSharp.saveNload
                 return string.Empty;
             }
         }
-        public static void ExporttoXML(string filePath, string content)
-        {
-            try
-            {
-                File.WriteAllText(filePath, content);
-                Console.WriteLine("Data exported to XML successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error exporting to XML: {ex.Message}");
-            }
-        }
     }
 }

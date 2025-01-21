@@ -17,7 +17,6 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
             public const string AccountNotFound = "Account not found.";
             public const string InvalidAmount = "Invalid amount.";
             public const string AccountNumber = "Enter Account Number: ";
-
         }
         private void SaveToFile() => FileManage.SaveToFile(baseURL, BanksToString());
 
@@ -64,7 +63,7 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
             }
             return sb.ToString();
         }
-        private Bank FindAccountByNumber(int accountNumber) =>  Banks.FirstOrDefault(b => b.AccountNumber == accountNumber);
+        private Bank FindAccountByNumber(int accountNumber) => Banks.FirstOrDefault(b => b.AccountNumber == accountNumber);
 
         public void AddAccount()
         {
@@ -120,7 +119,7 @@ namespace _30dayLAB___CSharp.Day_3_Banking_System
             }
             Console.Write("Enter Deposit Amount: ");
             decimal depositAmount = decimal.Parse(Console.ReadLine());
-            if(depositAmount <= 0)
+            if (depositAmount <= 0)
             {
                 Console.WriteLine(Messages.InvalidAmount);
                 return;
