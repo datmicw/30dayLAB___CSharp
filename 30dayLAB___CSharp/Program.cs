@@ -270,7 +270,9 @@
                 Console.Clear();
                 DrawBox("Day 5 Menu", ConsoleColor.Cyan, ConsoleColor.Black);
                 Console.WriteLine("  1. Add Student");
-                Console.WriteLine("  2. Back to Main Menu");
+                Console.WriteLine("  2. Show Student");
+                Console.WriteLine("  3. Average Grande");
+                Console.WriteLine("  3. Exit to mennu ");
                 Console.Write("  Choose an option: ");
                 if (!int.TryParse(Console.ReadLine(), out int n))
                 {
@@ -278,13 +280,19 @@
                     continue;
                 }
                 Console.Clear();
-                DrawBox("Day 3 Action", ConsoleColor.Magenta, ConsoleColor.Black);
+                DrawBox("Day 5 Action", ConsoleColor.Magenta, ConsoleColor.Black);
                 switch (n)
                 {
                     case 1:
                         studentManager.AddStudent();
                         break;
                     case 2:
+                        studentManager.ShowInfor();
+                        break;
+                    case 3:
+                        studentManager.AverageGrande();
+                        return;
+                    case 4:
                         ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
                         return;
                     default:
