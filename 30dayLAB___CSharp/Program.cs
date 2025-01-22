@@ -15,6 +15,7 @@
                 Console.WriteLine("  2. Challenge | Sort Products      | Bubble Sort  ");
                 Console.WriteLine("  3. Challenge | Banking System     | If/Else      ");
                 Console.WriteLine("  4. Challenge | Find Most Frequent | Dictionary   ");
+                Console.WriteLine("  5. Challenge | Student Manage     | Iterate      ");
                 Console.WriteLine("  31. Exit");
                 Console.Write("  Choose an option: ");
 
@@ -54,6 +55,9 @@
                     break;
                 case 4:
                     Day4();
+                    break;
+                case 5:
+                    Day5();
                     break;
                 default:
                     ShowMessage("Invalid day. Please select a valid day between 1 and 30.", ConsoleColor.Yellow);
@@ -246,6 +250,39 @@
                              .Select(int.Parse) // chuyển đổi mỗi phần tử thành số nguyên
                              .ToArray();
                         Day4_Find_Most_Frequent_Element.FindElement findElement = new Day4_Find_Most_Frequent_Element.FindElement(arr);
+                        break;
+                    case 2:
+                        ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
+                        return;
+                    default:
+                        ShowMessage("Invalid choice. Please try again.", ConsoleColor.Yellow);
+                        break;
+                }
+                ShowMessage("\nPress any key to continue...", ConsoleColor.Yellow);
+                Console.ReadKey();
+            }
+        }
+        private static void Day5()
+        {
+            Day5_Manage_Students.ManageStudents studentManager = new Day5_Manage_Students.ManageStudents();
+            while (true)
+            {
+                Console.Clear();
+                DrawBox("Day 5 Menu", ConsoleColor.Cyan, ConsoleColor.Black);
+                Console.WriteLine("  1. Add Student");
+                Console.WriteLine("  2. Back to Main Menu");
+                Console.Write("  Choose an option: ");
+                if (!int.TryParse(Console.ReadLine(), out int n))
+                {
+                    ShowMessage("Invalid option. Please enter a valid number!", ConsoleColor.Red);
+                    continue;
+                }
+                Console.Clear();
+                DrawBox("Day 3 Action", ConsoleColor.Magenta, ConsoleColor.Black);
+                switch (n)
+                {
+                    case 1:
+                        studentManager.AddStudent();
                         break;
                     case 2:
                         ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
