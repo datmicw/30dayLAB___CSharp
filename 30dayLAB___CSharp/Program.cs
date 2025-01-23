@@ -1,4 +1,5 @@
-﻿namespace _30dayLAB___CSharp
+﻿using System.Runtime.CompilerServices;
+namespace _30dayLAB___CSharp
 {
     class Program
     {
@@ -16,6 +17,7 @@
                 Console.WriteLine("  3. Challenge | Banking System     | If/Else      ");
                 Console.WriteLine("  4. Challenge | Find Most Frequent | Dictionary   ");
                 Console.WriteLine("  5. Challenge | Student Manage     | Iterate      ");
+                Console.WriteLine("  6. Challenge | Decode String      | Stack        ");
                 Console.WriteLine("  31. Exit");
                 Console.Write("  Choose an option: ");
 
@@ -59,12 +61,14 @@
                 case 5:
                     Day5();
                     break;
+                case 6:
+                    Day6();
+                    break;
                 default:
                     ShowMessage("Invalid day. Please select a valid day between 1 and 30.", ConsoleColor.Yellow);
                     break;
             }
         }
-
         private static void Day2()
         {
             Day2_Sort_Products.SortProducts sortProducts = new Day2_Sort_Products.SortProducts();
@@ -112,7 +116,6 @@
                 Console.ReadKey();
             }
         }
-
         private static void Day1()
         {
             Manage_Contacts.ManageContact manageContact = new Manage_Contacts.ManageContact();
@@ -303,6 +306,40 @@
                 Console.ReadKey();
             }
         }
+        private static void Day6()
+        {
+            Day6_Decode_String.DecodeString decode = new Day6_Decode_String.DecodeString();
+            while (true)
+            {
+                Console.Clear();
+                DrawBox("Day 6 Menu", ConsoleColor.Cyan, ConsoleColor.Black);
+                Console.WriteLine("  1. Input(3[a]2[bc])");
+                Console.WriteLine("  2. Exit to mennu ");
+                Console.Write("  Choose an option: ");
+                if (!int.TryParse(Console.ReadLine(), out int n))
+                {
+                    ShowMessage("Invalid option. Please enter a valid number!", ConsoleColor.Red);
+                    continue;
+                }
+                Console.Clear();
+                DrawBox("Day 6 Action", ConsoleColor.Magenta, ConsoleColor.Black);
+                switch (n)
+                {
+                    case 1:
+                        decode.Decode();
+                        break;
+                    case 2:
+                        ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
+                        return;
+                    default:
+                        ShowMessage("Invalid choice. Please try again.", ConsoleColor.Yellow);
+                        break;
+                }
+                ShowMessage("\nPress any key to continue...", ConsoleColor.Yellow);
+                Console.ReadKey();
+            }
+        }
+
 
         private static void ShowMessage(string message, ConsoleColor color)
         {
