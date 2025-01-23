@@ -38,7 +38,6 @@
                 }
             } while (!exit);
         }
-
         private static void ExecuteDay(int day)
         {
             Console.Clear();
@@ -338,15 +337,12 @@
                 Console.ReadKey();
             }
         }
-
-
         private static void ShowMessage(string message, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine($"\n  {message}");
             Console.ResetColor();
         }
-
         private static void DrawBox(string title, ConsoleColor fgColor, ConsoleColor bgColor)
         {
             Console.ForegroundColor = fgColor;
