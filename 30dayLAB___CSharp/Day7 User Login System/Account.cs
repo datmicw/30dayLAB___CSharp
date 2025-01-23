@@ -1,9 +1,13 @@
 ﻿
+using _30dayLAB___CSharp.saveNload;
+using System.Text;
+
 namespace _30dayLAB___CSharp.Day7_User_Login_System
 {
     internal class Account
     {
         List<User> accounts = new List<User>();
+        private string baseURL = "C:\\Users\\datmi\\OneDrive\\Documents\\Coder\\30dayLAB___CSharp\\30dayLAB___CSharp\\Data\\Day7_User.txt";
         public Account()
         {
             accounts = new List<User>();
@@ -12,6 +16,18 @@ namespace _30dayLAB___CSharp.Day7_User_Login_System
         {
             public const string AccountNotFound = "Account not found.";
         }
+        private void SaveToFile() => FileManage.SaveToFile(baseURL, AccountsToString());
+
+        private string AccountsToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var account in accounts)
+            {
+                sb.AppendLine($"Username: {account.Username}, Password: {account.Password}");
+            }
+            return sb.ToString();
+        }
+
         public void Register()
         {
             Console.WriteLine("Enter Username: ");
@@ -39,6 +55,7 @@ namespace _30dayLAB___CSharp.Day7_User_Login_System
                 Password = password
             });
             Console.WriteLine("Account created successfully.");
+            SaveToFile();
         }
     }
 }

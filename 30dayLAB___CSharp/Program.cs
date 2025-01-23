@@ -17,15 +17,14 @@
                 Console.WriteLine("  4. Challenge | Find Most Frequent | Dictionary   ");
                 Console.WriteLine("  5. Challenge | Student Manage     | Iterate      ");
                 Console.WriteLine("  6. Challenge | Decode String      | Stack        ");
+                Console.WriteLine("  7. Challenge | User Login System  | Loop         ");
                 Console.WriteLine("  31. Exit");
                 Console.Write("  Choose an option: ");
-
                 if (!int.TryParse(Console.ReadLine(), out int option))
                 {
                     ShowMessage("Invalid option. Please enter a valid number!", ConsoleColor.Red);
                     continue;
                 }
-
                 if (option == 31)
                 {
                     exit = true;
@@ -61,6 +60,12 @@
                     break;
                 case 6:
                     Day6();
+                    break;
+                case 7:
+                    Day7();
+                    break;
+                case 31:
+                    ShowMessage("Exiting program...", ConsoleColor.Green);
                     break;
                 default:
                     ShowMessage("Invalid day. Please select a valid day between 1 and 30.", ConsoleColor.Yellow);
@@ -325,6 +330,38 @@
                 {
                     case 1:
                         decode.Decode();
+                        break;
+                    case 2:
+                        ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
+                        return;
+                    default:
+                        ShowMessage("Invalid choice. Please try again.", ConsoleColor.Yellow);
+                        break;
+                }
+                ShowMessage("\nPress any key to continue...", ConsoleColor.Yellow);
+                Console.ReadKey();
+            }
+        }
+        private static void Day7()
+        {
+            Day7_User_Login_System.Account user = new Day7_User_Login_System.Account();
+            while (true)
+            {
+                Console.Clear();
+                DrawBox("Day 7 Menu", ConsoleColor.Cyan, ConsoleColor.Black);
+                Console.WriteLine("  1. Register Account");
+                Console.Write("  Choose an option: ");
+                if (!int.TryParse(Console.ReadLine(), out int n))
+                {
+                    ShowMessage("Invalid option. Please enter a valid number!", ConsoleColor.Red);
+                    continue;
+                }
+                Console.Clear();
+                DrawBox("Day 7 Action", ConsoleColor.Magenta, ConsoleColor.Black);
+                switch (n)
+                {
+                    case 1:
+                        user.Register();
                         break;
                     case 2:
                         ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
