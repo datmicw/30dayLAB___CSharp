@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-namespace _30dayLAB___CSharp
+﻿namespace _30dayLAB___CSharp
 {
     class Program
     {
@@ -313,7 +312,7 @@ namespace _30dayLAB___CSharp
             {
                 Console.Clear();
                 DrawBox("Day 6 Menu", ConsoleColor.Cyan, ConsoleColor.Black);
-                Console.WriteLine("  1. Input(3[a]2[bc])");
+                Console.WriteLine("  1. Decode String");
                 Console.WriteLine("  2. Exit to mennu ");
                 Console.Write("  Choose an option: ");
                 if (!int.TryParse(Console.ReadLine(), out int n))

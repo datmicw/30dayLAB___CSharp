@@ -8,9 +8,9 @@ namespace _30dayLAB___CSharp.Day6_Decode_String
 {
     internal class DecodeString()
     {
-       public string Decode()
+        public string Decode()
         {
-            Console.WriteLine("Input: ");
+            Console.WriteLine("Input (3[a]2[bc]): ");
             string s = Console.ReadLine();
             Stack<string> stackString = new Stack<string>(); // khoi tao stack string
             Stack<int> stackNum = new Stack<int>(); // khoi tao stack num
