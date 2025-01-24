@@ -350,6 +350,8 @@
                 Console.Clear();
                 DrawBox("Day 7 Menu", ConsoleColor.Cyan, ConsoleColor.Black);
                 Console.WriteLine("  1. Register Account");
+                Console.WriteLine("  2. Login Account");
+                Console.WriteLine("  3. View Account");
                 Console.Write("  Choose an option: ");
                 if (!int.TryParse(Console.ReadLine(), out int n))
                 {
@@ -364,6 +366,12 @@
                         user.Register();
                         break;
                     case 2:
+                        user.Login();
+                        break;
+                    case 3:
+                        user.ViewAccounts();
+                        break;
+                    case 4:
                         ShowMessage("Returning to Main Menu...", ConsoleColor.Green);
                         return;
                     default:
