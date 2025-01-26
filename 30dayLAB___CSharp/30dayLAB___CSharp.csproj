@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Day9 Number Guessing Game\" />
   </ItemGroup>
 
 </Project>

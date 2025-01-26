@@ -11,13 +11,14 @@
                 Console.Clear();
                 DrawBox("30 Days of C# Practice", ConsoleColor.Green, ConsoleColor.Black);
                 Console.WriteLine("  Select a day to work on (1-30):");
-                Console.WriteLine("  1. Challenge | Management Contact | Linear Search");
-                Console.WriteLine("  2. Challenge | Sort Products      | Bubble Sort  ");
-                Console.WriteLine("  3. Challenge | Banking System     | If/Else      ");
-                Console.WriteLine("  4. Challenge | Find Most Frequent | Dictionary   ");
-                Console.WriteLine("  5. Challenge | Student Manage     | Iterate      ");
-                Console.WriteLine("  6. Challenge | Decode String      | Stack        ");
-                Console.WriteLine("  7. Challenge | User Login System  | Loop         ");
+                Console.WriteLine("  1. Challenge | Management Contact    | Linear Search");
+                Console.WriteLine("  2. Challenge | Sort Products         | Bubble Sort  ");
+                Console.WriteLine("  3. Challenge | Banking System        | If/Else      ");
+                Console.WriteLine("  4. Challenge | Find Most Frequent    | Dictionary   ");
+                Console.WriteLine("  5. Challenge | Student Manage        | Iterate      ");
+                Console.WriteLine("  6. Challenge | Decode String         | Stack        ");
+                Console.WriteLine("  7. Challenge | User Login System     | Loop         ");
+                Console.WriteLine("  9. Challenge | Number Guessing Game  | Loop         ");
                 Console.WriteLine("  31. Exit");
                 Console.Write("  Choose an option: ");
                 if (!int.TryParse(Console.ReadLine(), out int option))
